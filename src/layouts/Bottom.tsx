@@ -3,13 +3,14 @@ import { Progress } from "../pages/Apply";
 import React from "react";
 
 interface Props {
+  progress: Progress;
   setProgress: React.Dispatch<React.SetStateAction<Progress>>;
 }
 
-export default function Bottom({ setProgress }: Props) {
+export default function Bottom({ progress, setProgress }: Props) {
   const navigate = useNavigate();
   return (
-    <section className="flex justify-between rounded-lg bg-white p-6">
+    <section className="flex w-full justify-between rounded-lg bg-white p-6">
       <button
         className="rounded-md bg-gray-200 px-4 py-1 hover:bg-blue-500"
         onClick={() => navigate(-1)}
@@ -18,9 +19,15 @@ export default function Bottom({ setProgress }: Props) {
       </button>
       <button
         className="rounded-md bg-blue-500 px-4 py-1 text-white"
-        onClick={() => setProgress((prev) => (prev === 3 ? 1 : prev + 1))}
+        onClick={() =>
+          setProgress((prev) => {
+            if (prev >= 3) return prev;
+
+            return prev + 1;
+          })
+        }
       >
-        다음
+        {progress === 3 ? "제출하기" : "다음"}
       </button>
     </section>
   );

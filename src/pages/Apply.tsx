@@ -30,7 +30,7 @@ export default function Apply() {
       </section>
       <Header progress={progress} />
       {renderContent(progress)}
-      <Bottom setProgress={setProgress} />
+      <Bottom setProgress={setProgress} progress={progress} />
     </main>
   );
 }
