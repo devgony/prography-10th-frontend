@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { Progress } from "./Apply";
+import { Progress } from "../pages/Apply";
 import React from "react";
 
 interface Props {

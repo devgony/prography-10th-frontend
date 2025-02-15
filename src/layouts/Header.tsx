@@ -1,4 +1,4 @@
-import { Progress } from "./Apply";
+import { Progress } from "../pages/Apply";
 
 interface Props {
   progress: Progress;

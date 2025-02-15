@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Header from "./Header";
-import One from "./One";
-import Two from "./Two";
-import Three from "./Three";
-import Bottom from "./Bottom";
+import Header from "../layouts/Header";
+import One from "../components/apply/One";
+import Two from "../components/apply/Two";
+import Three from "../components/apply/Three";
+import Bottom from "../layouts/Bottom";
 
 export enum Progress {
   One = 1,

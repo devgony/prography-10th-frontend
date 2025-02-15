@@ -1,9 +1,9 @@
 import "./tailwind.css";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
-import Home from "./Home";
-import Apply from "./Apply";
-import RootLayout from "./RootLayout";
+import Home from "./pages/Home";
+import Apply from "./pages/Apply";
+import RootLayout from "./layouts/RootLayout";
 
 const root = document.getElementById("root");
 
