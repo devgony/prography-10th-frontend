@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 export default function Home() {
   return (
     <main className="flex h-full flex-col items-center justify-around rounded-lg bg-white p-8">
@@ -31,9 +33,9 @@ export default function Home() {
         <p className="text-blue-500">🏡 공식 홈페이지</p>
         <p className="text-blue-500">🔗 인스타그램</p>
       </section>
-      <button className="rounded-md bg-blue-500 px-6 py-2 text-white">
+      <Link to="/apply" className="rounded-md bg-blue-500 px-6 py-2 text-white">
         지원하기
-      </button>
+      </Link>
     </main>
   );
 }
