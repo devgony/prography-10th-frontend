@@ -19,13 +19,13 @@ export default function Bottom({ progress, setProgress }: Props) {
       </button>
       <button
         className="rounded-md bg-blue-500 px-4 py-1 text-white"
-        onClick={() =>
-          setProgress((prev) => {
-            if (prev >= 3) return prev;
+        onClick={() => {
+          if (progress >= 3) {
+            navigate("/complete");
+          }
 
-            return prev + 1;
-          })
-        }
+          setProgress((prev) => prev + 1);
+        }}
       >
         {progress === 3 ? "제출하기" : "다음"}
       </button>
