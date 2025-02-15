@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
-import { Link } from "react-router";
 import Header from "./Header";
 import One from "./One";
 import Two from "./Two";
@@ -30,7 +28,7 @@ export default function Apply() {
       <section className="rounded-lg bg-white p-8 text-center text-2xl font-extrabold">
         <h1>Prography 10기 지원서</h1>
       </section>
-      <Header />
+      <Header progress={progress} />
       {renderContent(progress)}
       <Bottom setProgress={setProgress} />
     </main>

@@ -1,9 +1,13 @@
-export default function Header() {
+import { Progress } from "./Apply";
+
+interface Props {
+  progress: Progress;
+}
+
+export default function Header({ progress }: Props) {
   return (
     <section className="flex justify-around rounded-lg bg-white p-4">
-      <button>1</button>
-      <button>2</button>
-      <button>3</button>
+      <h1>{progress}</h1>
     </section>
   );
 }
