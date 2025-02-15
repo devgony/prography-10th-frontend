@@ -1,11 +1,12 @@
+import Title from "../Title";
+
 export default function One() {
   return (
-    <section className="rounded-lg bg-white p-6">
-      <h2 className="mb-3">개인정보 수집 동의</h2>
-      <hr className="mb-2 border-1 text-blue-500" />
-      <p className="mb-4">
-        프로그라피 10기 지원을 위한 개인정보 수집에 대한 동의가 필요합니다
-      </p>
+    <section className="apply-main">
+      <Title
+        title="개인정보 수집 동의"
+        subtitle="프로그라피 10기 지원을 위한 개인정보 수집에 대한 동의가 필요합니다"
+      />
 
       <div className="rounded-lg border border-gray-300 p-6">
         <p>수집 목적: Prography 10기 리쿠르팅 과정 및 결과 안내</p>

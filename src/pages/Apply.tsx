@@ -25,7 +25,7 @@ export default function Apply() {
   };
   return (
     <main className="flex flex-col justify-around gap-5">
-      <section className="rounded-lg bg-white p-8 text-center text-2xl font-extrabold">
+      <section className="rounded-lg bg-white p-6 text-center text-2xl font-extrabold">
         <h1>Prography 10기 지원서</h1>
       </section>
       <Header progress={progress} />
