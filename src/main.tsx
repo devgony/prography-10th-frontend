@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Apply from "./pages/Apply";
 import RootLayout from "./layouts/RootLayout";
 import Complete from "./pages/Complete";
+import ApplyProvider from "./providers/ApplyProvider";
 
 const root = document.getElementById("root");
 
@@ -13,7 +14,14 @@ ReactDOM.createRoot(root!).render(
     <Routes>
       <Route element={<RootLayout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/apply" element={<Apply />} />
+        <Route
+          path="/apply"
+          element={
+            <ApplyProvider>
+              <Apply />
+            </ApplyProvider>
+          }
+        />
         <Route path="/complete" element={<Complete />} />
       </Route>
     </Routes>

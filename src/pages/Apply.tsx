@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import Header from "../layouts/Header";
 import One from "../components/apply/One";
 import Two from "../components/apply/Two";
@@ -11,8 +11,10 @@ import ApplyProvider, {
 
 export default function Apply() {
   const {
-    state: { progress },
+    state: { progress, form },
   } = useContext(ApplyContext);
+
+  console.log(form);
 
   const renderContent = (progress: Progress) => {
     switch (progress) {
@@ -30,11 +32,9 @@ export default function Apply() {
       <section className="rounded-lg bg-white p-6 text-center text-2xl font-extrabold">
         <h1>Prography 10기 지원서</h1>
       </section>
-      <ApplyProvider>
-        <Header />
-        {renderContent(progress)}
-        <Bottom />
-      </ApplyProvider>
+      <Header />
+      {renderContent(progress)}
+      <Bottom />
     </main>
   );
 }
