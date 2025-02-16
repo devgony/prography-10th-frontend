@@ -2,7 +2,7 @@ import { Link } from "react-router";
 
 export default function Home() {
   return (
-    <main className="flex h-full flex-col items-center justify-around rounded-lg bg-white p-8">
+    <main className="flex h-[calc(100vh-2rem)] flex-col items-center justify-around rounded-lg bg-white p-8">
       <img src="/prography.png" alt="prography-logo" />
       <h1 className="text-xl font-bold">
         안녕하세요. 새로운 가치를 만들어가는 IT커뮤니티, Prography 입니다.

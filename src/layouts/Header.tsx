@@ -1,10 +1,10 @@
-import { Progress } from "../pages/Apply";
+import { useContext } from "react";
+import { ApplyContext } from "../providers/ApplyProvider";
 
-interface Props {
-  progress: Progress;
-}
-
-export default function Header({ progress }: Props) {
+export default function Header() {
+  const {
+    state: { progress },
+  } = useContext(ApplyContext);
   return (
     <section className="flex justify-around rounded-lg bg-white p-4">
       <h1>{progress}</h1>

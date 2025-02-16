@@ -1,14 +1,13 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router";
-import { Progress } from "../pages/Apply";
-import React from "react";
+import { ApplyContext } from "../providers/ApplyProvider";
 
-interface Props {
-  progress: Progress;
-  setProgress: React.Dispatch<React.SetStateAction<Progress>>;
-}
-
-export default function Bottom({ progress, setProgress }: Props) {
+export default function Bottom() {
   const navigate = useNavigate();
+  const {
+    state: { progress },
+    dispatch,
+  } = useContext(ApplyContext);
   return (
     <section className="flex w-full justify-between rounded-lg bg-white p-6">
       <button
@@ -24,7 +23,7 @@ export default function Bottom({ progress, setProgress }: Props) {
             navigate("/complete");
           }
 
-          setProgress((prev) => prev + 1);
+          dispatch({ type: "UPDATE_PROGRESS", payload: progress + 1 });
         }}
       >
         {progress === 3 ? "제출하기" : "다음"}
