@@ -17,6 +17,7 @@ export default function Bottom() {
         뒤로
       </button>
       <button
+        type="submit"
         className="rounded-md bg-blue-500 px-4 py-1 text-white"
         onClick={() => {
           if (progress >= 3) {

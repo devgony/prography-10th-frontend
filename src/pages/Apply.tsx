@@ -1,4 +1,4 @@
-import { useCallback, useContext } from "react";
+import { useActionState, useCallback, useContext } from "react";
 import Header from "../layouts/Header";
 import One from "../components/apply/One";
 import Two from "../components/apply/Two";
@@ -12,6 +12,7 @@ import ApplyProvider, {
 export default function Apply() {
   const {
     state: { progress, form },
+    dispatch,
   } = useContext(ApplyContext);
 
   console.log(form);
@@ -27,14 +28,23 @@ export default function Apply() {
     }
   };
 
+  const handleSubmit = (prev: any, data: FormData) => {
+    switch (progress) {
+      case Progress.One:
+        const agreed = data.get("agreed") === "true";
+        dispatch({ type: "UPDATE_AGREED", payload: agreed });
+    }
+  };
+  const [state, action] = useActionState(handleSubmit, null);
+
   return (
-    <main className="flex flex-col justify-around gap-5">
+    <form action={action} className="flex flex-col justify-around gap-5">
       <section className="rounded-lg bg-white p-6 text-center text-2xl font-extrabold">
         <h1>Prography 10기 지원서</h1>
       </section>
       <Header />
       {renderContent(progress)}
       <Bottom />
-    </main>
+    </form>
   );
 }
