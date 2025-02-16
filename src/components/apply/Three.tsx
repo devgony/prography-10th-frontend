@@ -19,8 +19,8 @@ export default function Three() {
         <p>지원 분야를 선택해주세요</p>
 
         <ul className="flex flex-col gap-2">
-          {Object.values(Role).map((label) => (
-            <Li key={label} label={label} />
+          {Object.values(Role).map((role) => (
+            <Li key={role} label={role} />
           ))}
         </ul>
       </div>

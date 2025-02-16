@@ -19,13 +19,6 @@ export default function Bottom() {
       <button
         type="submit"
         className="rounded-md bg-blue-500 px-4 py-1 text-white"
-        onClick={() => {
-          if (progress >= 3) {
-            navigate("/complete");
-          }
-
-          dispatch({ type: "UPDATE_PROGRESS", payload: progress + 1 });
-        }}
       >
         {progress === 3 ? "제출하기" : "다음"}
       </button>

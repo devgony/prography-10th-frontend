@@ -27,10 +27,12 @@ type ApplyAction =
       type: "UPDATE_PERSONAL";
       payload: { name: string; email: string; phone: string };
     }
-  | { type: "UPDATE_ROLE"; payload: Role }
-  | { type: "RESET" };
+  | { type: "UPDATE_ROLE"; payload: Role };
 
-function applyReducer(state: ApplyState, action: ApplyAction): ApplyState {
+export function applyReducer(
+  state: ApplyState,
+  action: ApplyAction,
+): ApplyState {
   switch (action.type) {
     case "UPDATE_PROGRESS":
       return { ...state, progress: action.payload };

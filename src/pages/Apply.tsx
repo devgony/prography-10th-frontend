@@ -2,18 +2,21 @@ import { useActionState, useCallback, useContext } from "react";
 import Header from "../layouts/Header";
 import One from "../components/apply/One";
 import Two from "../components/apply/Two";
-import Three from "../components/apply/Three";
+import Three, { Role } from "../components/apply/Three";
 import Bottom from "../layouts/Bottom";
 import ApplyProvider, {
   ApplyContext,
+  applyReducer,
   Progress,
 } from "../providers/ApplyProvider";
+import { useNavigate } from "react-router";
 
 export default function Apply() {
   const {
     state: { progress, form },
     dispatch,
   } = useContext(ApplyContext);
+  const navigate = useNavigate();
 
   console.log(form);
 
@@ -33,6 +36,7 @@ export default function Apply() {
       case Progress.One:
         const agreed = data.get("agreed") === "true";
         dispatch({ type: "UPDATE_AGREED", payload: agreed });
+        dispatch({ type: "UPDATE_PROGRESS", payload: progress + 1 });
         break;
       case Progress.Two:
         console.log("ahere");
@@ -40,6 +44,19 @@ export default function Apply() {
         const email = data.get("email") as string;
         const phone = data.get("phone") as string;
         dispatch({ type: "UPDATE_PERSONAL", payload: { name, email, phone } });
+        dispatch({ type: "UPDATE_PROGRESS", payload: progress + 1 });
+        break;
+      case Progress.Three:
+        const role = data.get("role") as Role;
+        console.log("role: ", role);
+        const action = { type: "UPDATE_ROLE", payload: role } as const;
+        dispatch(action);
+
+        const formDataToSend = applyReducer({ progress, form }, action);
+        alert(
+          "리쿠팅 폼 데이터 API요청: " + JSON.stringify(formDataToSend.form),
+        );
+        navigate("/complete");
         break;
     }
   };
