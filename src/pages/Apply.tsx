@@ -33,6 +33,14 @@ export default function Apply() {
       case Progress.One:
         const agreed = data.get("agreed") === "true";
         dispatch({ type: "UPDATE_AGREED", payload: agreed });
+        break;
+      case Progress.Two:
+        console.log("ahere");
+        const name = data.get("name") as string;
+        const email = data.get("email") as string;
+        const phone = data.get("phone") as string;
+        dispatch({ type: "UPDATE_PERSONAL", payload: { name, email, phone } });
+        break;
     }
   };
   const [state, action] = useActionState(handleSubmit, null);
