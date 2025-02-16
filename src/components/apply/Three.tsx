@@ -1,6 +1,15 @@
 import Li from "../Li";
 import Title from "../Title";
 
+export enum Role {
+  Frontend = "프론트엔드",
+  Backend = "백엔드",
+  Design = "디자인",
+  iOS = "iOS",
+  Android = "안드로이드",
+  ProductOwner = "Product Owner",
+}
+
 export default function Three() {
   return (
     <section className="apply-main">
@@ -10,14 +19,7 @@ export default function Three() {
         <p>지원 분야를 선택해주세요</p>
 
         <ul className="flex flex-col gap-2">
-          {[
-            "프론트엔드",
-            "백엔드",
-            "디자인",
-            "iOS",
-            "안드로이드",
-            "Product Owner",
-          ].map((label) => (
+          {Object.values(Role).map((label) => (
             <Li key={label} label={label} />
           ))}
         </ul>
