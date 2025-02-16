@@ -1,6 +1,16 @@
+import { useContext } from "react";
 import Title from "../Title";
+import { ApplyContext } from "../../providers/ApplyProvider";
 
 export default function One() {
+  const { dispatch } = useContext(ApplyContext);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value === "agree") {
+      dispatch({ type: "UPDATE_AGREED", payload: true });
+    } else {
+      dispatch({ type: "UPDATE_AGREED", payload: false });
+    }
+  };
   return (
     <section className="apply-main">
       <Title
@@ -22,13 +32,23 @@ export default function One() {
         <ul className="flex flex-col gap-2">
           <li>
             <label className="flex gap-2 rounded-lg border border-gray-300 p-3">
-              <input type="radio" name="privacy" value="agree" />
+              <input
+                type="radio"
+                name="privacy"
+                value="agree"
+                onChange={handleChange}
+              />
               개인정보 수집 여부에 동의합니다
             </label>
           </li>
           <li>
             <label className="flex gap-2 rounded-lg border border-gray-300 p-3">
-              <input type="radio" name="privacy" value="disagree" />
+              <input
+                type="radio"
+                name="privacy"
+                value="disagree"
+                onChange={handleChange}
+              />
               개인정보 수집 여부에 동의하지 않습니다
             </label>
           </li>
