@@ -1,5 +1,7 @@
+import { useContext } from "react";
 import Li from "../Li";
 import Title from "../Title";
+import { ApplyContext } from "../../providers/ApplyProvider";
 
 export enum Role {
   Frontend = "프론트엔드",
@@ -11,6 +13,11 @@ export enum Role {
 }
 
 export default function Three() {
+  const {
+    state: {
+      form: { role },
+    },
+  } = useContext(ApplyContext);
   return (
     <section className="apply-main">
       <Title title="지원정보" subtitle="지원하고자 하는 분야를 선택해주세요" />
@@ -19,8 +26,8 @@ export default function Three() {
         <p>지원 분야를 선택해주세요</p>
 
         <ul className="flex flex-col gap-2">
-          {Object.values(Role).map((role) => (
-            <Li key={role} label={role} />
+          {Object.values(Role).map((label) => (
+            <Li key={label} label={label} defaultChecked={label === role} />
           ))}
         </ul>
       </div>

@@ -1,6 +1,13 @@
+import { useContext } from "react";
 import Title from "../Title";
+import { ApplyContext } from "../../providers/ApplyProvider";
 
 export default function Two() {
+  const {
+    state: {
+      form: { name, email, phone },
+    },
+  } = useContext(ApplyContext);
   return (
     <section className="apply-main flex flex-col gap-3">
       <Title title="기본 정보" subtitle="연락 가능한 정보를 입력해주세요" />
@@ -12,6 +19,7 @@ export default function Two() {
           className="w-full rounded-md border border-gray-300 bg-purple-50 py-1 pl-2"
           type="text"
           placeholder="김프로"
+          defaultValue={name}
         />
       </div>
 
@@ -22,6 +30,7 @@ export default function Two() {
           className="w-full rounded-md border border-gray-300 bg-purple-50 py-1 pl-2"
           type="text"
           placeholder="예시: prography@gmail.com"
+          defaultValue={email}
         />
       </div>
 
@@ -32,6 +41,7 @@ export default function Two() {
           className="w-full rounded-md border border-gray-300 bg-purple-50 py-1 pl-2"
           type="text"
           placeholder="예시: 010-1234-5678"
+          defaultValue={phone}
         />
       </div>
     </section>

@@ -18,7 +18,7 @@ interface IForm {
   name: string;
   email: string;
   phone: string;
-  role: Role;
+  role?: Role;
 }
 
 interface ApplyState {
@@ -73,7 +73,7 @@ const initialApplyState: ApplyState = {
     name: "",
     email: "",
     phone: "",
-    role: Role.Frontend,
+    role: undefined,
   },
 };
 

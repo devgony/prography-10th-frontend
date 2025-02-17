@@ -20,7 +20,7 @@ export default function Apply() {
   } = useContext(ApplyContext);
   const navigate = useNavigate();
 
-  console.log("progress", progress);
+  console.log("progress", form);
 
   const renderContent = (progress: Progress) => {
     switch (progress) {
