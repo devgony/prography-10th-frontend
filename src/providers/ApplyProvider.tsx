@@ -7,8 +7,14 @@ export enum Progress {
   Three = 3,
 }
 
+export enum Consent {
+  True = "true",
+  False = "false",
+  Undefined = "undefined",
+}
+
 interface IForm {
-  agreed: boolean;
+  consent: Consent;
   name: string;
   email: string;
   phone: string;
@@ -22,14 +28,14 @@ interface ApplyState {
 
 export enum ApplyActionType {
   UPDATE_PROGRESS = "UPDATE_PROGRESS",
-  UPDATE_AGREED = "UPDATE_AGREED",
+  UPDATE_CONSENT = "UPDATE_CONSENT",
   UPDATE_PERSONAL = "UPDATE_PERSONAL",
   UPDATE_ROLE = "UPDATE_ROLE",
 }
 
 type ApplyAction =
   | { type: ApplyActionType.UPDATE_PROGRESS; payload: Progress }
-  | { type: ApplyActionType.UPDATE_AGREED; payload: boolean }
+  | { type: ApplyActionType.UPDATE_CONSENT; payload: Consent }
   | {
       type: ApplyActionType.UPDATE_PERSONAL;
       payload: { name: string; email: string; phone: string };
@@ -43,8 +49,8 @@ export function applyReducer(
   switch (action.type) {
     case ApplyActionType.UPDATE_PROGRESS:
       return { ...state, progress: action.payload };
-    case ApplyActionType.UPDATE_AGREED:
-      return { ...state, form: { ...state.form, agreed: action.payload } };
+    case ApplyActionType.UPDATE_CONSENT:
+      return { ...state, form: { ...state.form, consent: action.payload } };
     case ApplyActionType.UPDATE_PERSONAL:
       return {
         ...state,
@@ -63,7 +69,7 @@ export function applyReducer(
 const initialApplyState: ApplyState = {
   progress: Progress.One,
   form: {
-    agreed: false,
+    consent: Consent.Undefined,
     name: "",
     email: "",
     phone: "",

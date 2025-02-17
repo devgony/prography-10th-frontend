@@ -1,6 +1,13 @@
+import { useContext } from "react";
 import Title from "../Title";
+import { ApplyContext, Consent } from "../../providers/ApplyProvider";
 
 export default function One() {
+  const {
+    state: {
+      form: { consent },
+    },
+  } = useContext(ApplyContext);
   return (
     <section className="apply-main">
       <Title
@@ -22,13 +29,23 @@ export default function One() {
         <ul className="flex flex-col gap-2">
           <li>
             <label className="flex gap-2 rounded-lg border border-gray-300 p-3">
-              <input type="radio" name="agreed" value="true" />
+              <input
+                type="radio"
+                name="consent"
+                value={Consent.True}
+                defaultChecked={consent === Consent.True}
+              />
               개인정보 수집 여부에 동의합니다
             </label>
           </li>
           <li>
             <label className="flex gap-2 rounded-lg border border-gray-300 p-3">
-              <input type="radio" name="agreed" value="false" />
+              <input
+                type="radio"
+                name="consent"
+                value={Consent.False}
+                defaultChecked={consent == Consent.False}
+              />
               개인정보 수집 여부에 동의하지 않습니다
             </label>
           </li>

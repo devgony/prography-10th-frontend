@@ -8,6 +8,7 @@ import ApplyProvider, {
   ApplyActionType,
   ApplyContext,
   applyReducer,
+  Consent,
   Progress,
 } from "../providers/ApplyProvider";
 import { useNavigate } from "react-router";
@@ -35,8 +36,8 @@ export default function Apply() {
   const handleSubmit = (prev: any, data: FormData) => {
     switch (progress) {
       case Progress.One:
-        const agreed = data.get("agreed") === "true";
-        dispatch({ type: ApplyActionType.UPDATE_AGREED, payload: agreed });
+        const consent = data.get("consent") as Consent;
+        dispatch({ type: ApplyActionType.UPDATE_CONSENT, payload: consent });
         dispatch({
           type: ApplyActionType.UPDATE_PROGRESS,
           payload: progress + 1,
