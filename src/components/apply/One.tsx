@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import Title from "../Title";
-import { ApplyContext, Consent } from "../../providers/ApplyProvider";
+import { ApplyContext } from "../../providers/ApplyProvider";
 
 export default function One() {
   const {
@@ -32,8 +32,8 @@ export default function One() {
               <input
                 type="radio"
                 name="consent"
-                value={Consent.True}
-                defaultChecked={consent === Consent.True}
+                value="true"
+                defaultChecked={consent === true}
               />
               개인정보 수집 여부에 동의합니다
             </label>
@@ -43,8 +43,8 @@ export default function One() {
               <input
                 type="radio"
                 name="consent"
-                value={Consent.False}
-                defaultChecked={consent == Consent.False}
+                value="false"
+                defaultChecked={consent === false}
               />
               개인정보 수집 여부에 동의하지 않습니다
             </label>

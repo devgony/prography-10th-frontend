@@ -7,14 +7,8 @@ export enum Progress {
   Three = 3,
 }
 
-export enum Consent {
-  True = "true",
-  False = "false",
-  Undefined = "undefined",
-}
-
 interface IForm {
-  consent: Consent;
+  consent?: boolean;
   name: string;
   email: string;
   phone: string;
@@ -35,7 +29,7 @@ export enum ApplyActionType {
 
 type ApplyAction =
   | { type: ApplyActionType.UPDATE_PROGRESS; payload: Progress }
-  | { type: ApplyActionType.UPDATE_CONSENT; payload: Consent }
+  | { type: ApplyActionType.UPDATE_CONSENT; payload: boolean }
   | {
       type: ApplyActionType.UPDATE_PERSONAL;
       payload: { name: string; email: string; phone: string };
@@ -69,11 +63,9 @@ export function applyReducer(
 const initialApplyState: ApplyState = {
   progress: Progress.One,
   form: {
-    consent: Consent.Undefined,
     name: "",
     email: "",
     phone: "",
-    role: undefined,
   },
 };
 
