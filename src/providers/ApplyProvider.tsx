@@ -20,25 +20,32 @@ interface ApplyState {
   form: IForm;
 }
 
+export enum ApplyActionType {
+  UPDATE_PROGRESS = "UPDATE_PROGRESS",
+  UPDATE_AGREED = "UPDATE_AGREED",
+  UPDATE_PERSONAL = "UPDATE_PERSONAL",
+  UPDATE_ROLE = "UPDATE_ROLE",
+}
+
 type ApplyAction =
-  | { type: "UPDATE_PROGRESS"; payload: Progress }
-  | { type: "UPDATE_AGREED"; payload: boolean }
+  | { type: ApplyActionType.UPDATE_PROGRESS; payload: Progress }
+  | { type: ApplyActionType.UPDATE_AGREED; payload: boolean }
   | {
-      type: "UPDATE_PERSONAL";
+      type: ApplyActionType.UPDATE_PERSONAL;
       payload: { name: string; email: string; phone: string };
     }
-  | { type: "UPDATE_ROLE"; payload: Role };
+  | { type: ApplyActionType.UPDATE_ROLE; payload: Role };
 
 export function applyReducer(
   state: ApplyState,
   action: ApplyAction,
 ): ApplyState {
   switch (action.type) {
-    case "UPDATE_PROGRESS":
+    case ApplyActionType.UPDATE_PROGRESS:
       return { ...state, progress: action.payload };
-    case "UPDATE_AGREED":
+    case ApplyActionType.UPDATE_AGREED:
       return { ...state, form: { ...state.form, agreed: action.payload } };
-    case "UPDATE_PERSONAL":
+    case ApplyActionType.UPDATE_PERSONAL:
       return {
         ...state,
         form: {
@@ -48,10 +55,9 @@ export function applyReducer(
           phone: action.payload.phone,
         },
       };
-    case "UPDATE_ROLE":
+    case ApplyActionType.UPDATE_ROLE:
       return { ...state, form: { ...state.form, role: action.payload } };
   }
-  throw new Error("Unhandled action type");
 }
 
 const initialApplyState: ApplyState = {

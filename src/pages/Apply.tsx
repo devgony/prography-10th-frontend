@@ -5,6 +5,7 @@ import Two from "../components/apply/Two";
 import Three, { Role } from "../components/apply/Three";
 import Bottom from "../layouts/Bottom";
 import ApplyProvider, {
+  ApplyActionType,
   ApplyContext,
   applyReducer,
   Progress,
@@ -18,7 +19,7 @@ export default function Apply() {
   } = useContext(ApplyContext);
   const navigate = useNavigate();
 
-  console.log(form);
+  console.log("progress", progress);
 
   const renderContent = (progress: Progress) => {
     switch (progress) {
@@ -35,21 +36,31 @@ export default function Apply() {
     switch (progress) {
       case Progress.One:
         const agreed = data.get("agreed") === "true";
-        dispatch({ type: "UPDATE_AGREED", payload: agreed });
-        dispatch({ type: "UPDATE_PROGRESS", payload: progress + 1 });
+        dispatch({ type: ApplyActionType.UPDATE_AGREED, payload: agreed });
+        dispatch({
+          type: ApplyActionType.UPDATE_PROGRESS,
+          payload: progress + 1,
+        });
         break;
       case Progress.Two:
-        console.log("ahere");
         const name = data.get("name") as string;
         const email = data.get("email") as string;
         const phone = data.get("phone") as string;
-        dispatch({ type: "UPDATE_PERSONAL", payload: { name, email, phone } });
-        dispatch({ type: "UPDATE_PROGRESS", payload: progress + 1 });
+        dispatch({
+          type: ApplyActionType.UPDATE_PERSONAL,
+          payload: { name, email, phone },
+        });
+        dispatch({
+          type: ApplyActionType.UPDATE_PROGRESS,
+          payload: progress + 1,
+        });
         break;
       case Progress.Three:
         const role = data.get("role") as Role;
-        console.log("role: ", role);
-        const action = { type: "UPDATE_ROLE", payload: role } as const;
+        const action = {
+          type: ApplyActionType.UPDATE_ROLE,
+          payload: role,
+        } as const;
         dispatch(action);
 
         const formDataToSend = applyReducer({ progress, form }, action);
