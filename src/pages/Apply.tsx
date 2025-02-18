@@ -74,7 +74,7 @@ export default function Apply() {
 
   const handleSubmit = (prev: any, data: FormData) => {
     switch (progress) {
-      case Progress.One:
+      case Progress.One: {
         const consent = data.get("consent") as "true" | "false" | undefined;
         const payload = consent && consent === "true";
         dispatch({
@@ -91,27 +91,31 @@ export default function Apply() {
           type: ApplyActionType.UPDATE_PROGRESS,
           payload: progress + 1,
         });
-        break;
-      case Progress.Two:
-        const personalResult = personalSchema.safeParse({
-          name: data.get("name"),
-          email: data.get("email"),
-          phone: data.get("phone"),
-        });
-
-        if (!personalResult.success) {
-          return personalResult.error.flatten();
-        }
+        return;
+      }
+      case Progress.Two: {
+        const formData = {
+          name: data.get("name")?.toString() ?? "",
+          email: data.get("email")?.toString() ?? "",
+          phone: data.get("phone")?.toString() ?? "",
+        };
 
         dispatch({
           type: ApplyActionType.UPDATE_PERSONAL,
-          payload: personalResult.data,
+          payload: formData,
         });
+
+        const { success, error } = personalSchema.safeParse(formData);
+        if (!success) {
+          return error.flatten();
+        }
+
         dispatch({
           type: ApplyActionType.UPDATE_PROGRESS,
           payload: progress + 1,
         });
         break;
+      }
       case Progress.Three:
         const roleResult = roleSchema.safeParse({
           role: data.get("role"),
