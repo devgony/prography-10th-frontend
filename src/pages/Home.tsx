@@ -33,7 +33,11 @@ export default function Home() {
         <p className="text-blue-500">🏡 공식 홈페이지</p>
         <p className="text-blue-500">🔗 인스타그램</p>
       </section>
-      <Link to="/apply" className="rounded-md bg-blue-500 px-6 py-2 text-white">
+      <Link
+        to="/apply"
+        className="rounded-md bg-blue-500 px-6 py-2 text-white"
+        viewTransition
+      >
         지원하기
       </Link>
     </main>

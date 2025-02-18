@@ -12,6 +12,7 @@ import {
   Progress,
 } from "../providers/ApplyProvider";
 import { useNavigate } from "react-router";
+import { flushSync } from "react-dom";
 
 const consentSchema = z.object({
   consent: z.literal("true", {
@@ -87,10 +88,14 @@ export default function Apply() {
           return error.flatten();
         }
 
-        dispatch({
-          type: ApplyActionType.UPDATE_PROGRESS,
-          payload: progress + 1,
-        });
+        document.startViewTransition(() =>
+          flushSync(() =>
+            dispatch({
+              type: ApplyActionType.UPDATE_PROGRESS,
+              payload: progress + 1,
+            }),
+          ),
+        );
         return;
       }
       case Progress.Two: {

@@ -3,3 +3,27 @@
 .apply-main {
   @apply rounded-lg bg-white p-6;
 }
+
+@keyframes slideOut {
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.view-apply-form {
+  view-transition-name: view-apply-form;
+}
+
+::view-transition-old(view-apply-form) {
+  animation: slideOut 1.5s;
+}
+::view-transition-new(view-apply-form) {
+  animation: slideIn 1.5s;
+}

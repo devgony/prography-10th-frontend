@@ -13,7 +13,7 @@ export default function Two({ fieldErrors }: Props) {
     },
   } = useContext(ApplyContext);
   return (
-    <section className="apply-main flex flex-col gap-3">
+    <section className="apply-main view-apply-form flex flex-col gap-3">
       <Title title="기본 정보" subtitle="연락 가능한 정보를 입력해주세요" />
 
       <div className="flex flex-col gap-2 rounded-lg border border-gray-300 p-3">
@@ -22,7 +22,7 @@ export default function Two({ fieldErrors }: Props) {
           name="name"
           className="w-full rounded-md border border-gray-300 bg-purple-50 py-1 pl-2"
           type="text"
-          placeholder="김프로"
+          placeholder="예시: 김프로"
           defaultValue={name}
         />
         {fieldErrors?.name?.map((error, index) => (
@@ -54,7 +54,7 @@ export default function Two({ fieldErrors }: Props) {
           name="phone"
           className="w-full rounded-md border border-gray-300 bg-purple-50 py-1 pl-2"
           type="text"
-          placeholder="예시: 010-1234-5678"
+          placeholder="예시: 010-1234-5678 혹은 01012345678"
           defaultValue={phone}
         />
         {fieldErrors?.phone?.map((error, index) => (

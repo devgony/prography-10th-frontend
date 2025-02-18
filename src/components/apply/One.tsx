@@ -13,7 +13,7 @@ export default function One({ fieldErrors }: Props) {
     },
   } = useContext(ApplyContext);
   return (
-    <section className="apply-main">
+    <section className="apply-main view-apply-form">
       <Title
         title="개인정보 수집 동의"
         subtitle="프로그라피 10기 지원을 위한 개인정보 수집에 대한 동의가 필요합니다"
