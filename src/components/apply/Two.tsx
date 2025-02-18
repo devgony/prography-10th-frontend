@@ -1,8 +1,12 @@
 import { useContext } from "react";
 import Title from "../Title";
 import { ApplyContext } from "../../providers/ApplyProvider";
+import { PersonalErrors } from "../../pages/Apply";
 
-export default function Two() {
+interface Props {
+  fieldErrors?: PersonalErrors;
+}
+export default function Two({ fieldErrors }: Props) {
   const {
     state: {
       form: { name, email, phone },
@@ -21,6 +25,11 @@ export default function Two() {
           placeholder="김프로"
           defaultValue={name}
         />
+        {fieldErrors?.name?.map((error, index) => (
+          <span key={index} className="font-medium text-red-500">
+            {error}
+          </span>
+        ))}
       </div>
 
       <div className="flex flex-col gap-2 rounded-lg border border-gray-300 p-3">
@@ -32,6 +41,11 @@ export default function Two() {
           placeholder="예시: prography@gmail.com"
           defaultValue={email}
         />
+        {fieldErrors?.email?.map((error, index) => (
+          <span key={index} className="font-medium text-red-500">
+            {error}
+          </span>
+        ))}
       </div>
 
       <div className="flex flex-col gap-2 rounded-lg border border-gray-300 p-3">
@@ -43,6 +57,11 @@ export default function Two() {
           placeholder="예시: 010-1234-5678"
           defaultValue={phone}
         />
+        {fieldErrors?.phone?.map((error, index) => (
+          <span key={index} className="font-medium text-red-500">
+            {error}
+          </span>
+        ))}
       </div>
     </section>
   );

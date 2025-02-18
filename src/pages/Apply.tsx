@@ -1,16 +1,47 @@
-import { useActionState, useCallback, useContext } from "react";
+import { z } from "zod";
+import { useActionState, useContext } from "react";
 import Header from "../layouts/Header";
 import One from "../components/apply/One";
 import Two from "../components/apply/Two";
 import Three, { Role } from "../components/apply/Three";
 import Bottom from "../layouts/Bottom";
-import ApplyProvider, {
+import {
   ApplyActionType,
   ApplyContext,
   applyReducer,
   Progress,
 } from "../providers/ApplyProvider";
 import { useNavigate } from "react-router";
+
+const consentSchema = z.object({
+  consent: z.enum(["true", "false"]),
+});
+
+const personalSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email("Invalid email address"),
+  phone: z.string().min(1, "Phone number is required"),
+});
+
+const roleSchema = z.object({
+  role: z.nativeEnum(Role),
+});
+
+export type ConsentErrors = {
+  consent?: string[] | undefined;
+};
+
+export type PersonalErrors = {
+  name?: string[] | undefined;
+  email?: string[] | undefined;
+  phone?: string[] | undefined;
+};
+
+export type RoleErrors = {
+  role?: string[] | undefined;
+};
+
+type FieldErrors = ConsentErrors | PersonalErrors | RoleErrors | undefined;
 
 export default function Apply() {
   const {
@@ -21,24 +52,31 @@ export default function Apply() {
 
   console.log("progress", form);
 
-  const renderContent = (progress: Progress) => {
+  const renderContent = (progress: Progress, fieldErrors: FieldErrors) => {
     switch (progress) {
       case Progress.One:
-        return <One />;
+        return <One fieldErrors={fieldErrors as ConsentErrors} />;
       case Progress.Two:
-        return <Two />;
+        return <Two fieldErrors={fieldErrors as PersonalErrors} />;
       case Progress.Three:
-        return <Three />;
+        return <Three fieldErrors={fieldErrors as RoleErrors} />;
     }
   };
 
   const handleSubmit = (prev: any, data: FormData) => {
     switch (progress) {
       case Progress.One:
-        const consent = data.get("consent") as string;
+        const consentResult = consentSchema.safeParse({
+          consent: data.get("consent"),
+        });
+
+        if (!consentResult.success) {
+          return consentResult.error.flatten();
+        }
+
         dispatch({
           type: ApplyActionType.UPDATE_CONSENT,
-          payload: consent === "true",
+          payload: consentResult.data.consent === "true",
         });
         dispatch({
           type: ApplyActionType.UPDATE_PROGRESS,
@@ -46,12 +84,19 @@ export default function Apply() {
         });
         break;
       case Progress.Two:
-        const name = data.get("name") as string;
-        const email = data.get("email") as string;
-        const phone = data.get("phone") as string;
+        const personalResult = personalSchema.safeParse({
+          name: data.get("name"),
+          email: data.get("email"),
+          phone: data.get("phone"),
+        });
+
+        if (!personalResult.success) {
+          return personalResult.error.flatten();
+        }
+
         dispatch({
           type: ApplyActionType.UPDATE_PERSONAL,
-          payload: { name, email, phone },
+          payload: personalResult.data,
         });
         dispatch({
           type: ApplyActionType.UPDATE_PROGRESS,
@@ -59,10 +104,17 @@ export default function Apply() {
         });
         break;
       case Progress.Three:
-        const role = data.get("role") as Role;
+        const roleResult = roleSchema.safeParse({
+          role: data.get("role"),
+        });
+
+        if (!roleResult.success) {
+          return roleResult.error.flatten();
+        }
+
         const action = {
           type: ApplyActionType.UPDATE_ROLE,
-          payload: role,
+          payload: roleResult.data.role,
         } as const;
         dispatch(action);
 
@@ -82,7 +134,7 @@ export default function Apply() {
         <h1>Prography 10기 지원서</h1>
       </section>
       <Header />
-      {renderContent(progress)}
+      {renderContent(progress, state?.fieldErrors)}
       <Bottom />
     </form>
   );

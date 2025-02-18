@@ -2,7 +2,11 @@ import { useContext } from "react";
 import Li from "../Li";
 import Title from "../Title";
 import { ApplyContext } from "../../providers/ApplyProvider";
+import { RoleErrors } from "../../pages/Apply";
 
+interface Props {
+  fieldErrors?: RoleErrors;
+}
 export enum Role {
   Frontend = "프론트엔드",
   Backend = "백엔드",
@@ -12,7 +16,7 @@ export enum Role {
   ProductOwner = "Product Owner",
 }
 
-export default function Three() {
+export default function Three({ fieldErrors }: Props) {
   const {
     state: {
       form: { role },
@@ -31,6 +35,11 @@ export default function Three() {
           ))}
         </ul>
       </div>
+      {fieldErrors?.role?.map((error, index) => (
+        <span key={index} className="font-medium text-red-500">
+          {error}
+        </span>
+      ))}
     </section>
   );
 }

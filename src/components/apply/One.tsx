@@ -1,8 +1,12 @@
 import { useContext } from "react";
 import Title from "../Title";
 import { ApplyContext } from "../../providers/ApplyProvider";
+import { ConsentErrors } from "../../pages/Apply";
 
-export default function One() {
+interface Props {
+  fieldErrors?: ConsentErrors;
+}
+export default function One({ fieldErrors }: Props) {
   const {
     state: {
       form: { consent },
@@ -50,6 +54,11 @@ export default function One() {
             </label>
           </li>
         </ul>
+        {fieldErrors?.consent?.map((error, index) => (
+          <span key={index} className="font-medium text-red-500">
+            {error}
+          </span>
+        ))}
       </div>
     </section>
   );
