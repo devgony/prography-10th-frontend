@@ -27,7 +27,7 @@ export enum ApplyActionType {
   UPDATE_ROLE = "UPDATE_ROLE",
 }
 
-type ApplyAction =
+export type ApplyAction =
   | { type: ApplyActionType.UPDATE_PROGRESS; payload: Progress }
   | { type: ApplyActionType.UPDATE_CONSENT; payload: boolean | undefined }
   | {

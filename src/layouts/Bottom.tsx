@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { ApplyActionType, ApplyContext } from "../providers/ApplyProvider";
+import animatedNavigate from "../utils/animatedNavigate";
 
 export default function Bottom() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export default function Bottom() {
       return;
     }
 
-    dispatch({ type: ApplyActionType.UPDATE_PROGRESS, payload: progress - 1 });
+    animatedNavigate("back", progress, dispatch);
   };
   return (
     <section className="flex w-full justify-between rounded-lg bg-white p-6">
