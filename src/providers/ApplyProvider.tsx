@@ -29,7 +29,7 @@ export enum ApplyActionType {
 
 type ApplyAction =
   | { type: ApplyActionType.UPDATE_PROGRESS; payload: Progress }
-  | { type: ApplyActionType.UPDATE_CONSENT; payload: boolean }
+  | { type: ApplyActionType.UPDATE_CONSENT; payload: boolean | undefined }
   | {
       type: ApplyActionType.UPDATE_PERSONAL;
       payload: { name: string; email: string; phone: string };

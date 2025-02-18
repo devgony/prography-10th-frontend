@@ -12,7 +12,6 @@ import {
   Progress,
 } from "../providers/ApplyProvider";
 import { useNavigate } from "react-router";
-import errorMap from "zod/locales/en.js";
 
 const consentSchema = z.object({
   consent: z.literal("true", {
@@ -76,18 +75,18 @@ export default function Apply() {
   const handleSubmit = (prev: any, data: FormData) => {
     switch (progress) {
       case Progress.One:
-        const consentResult = consentSchema.safeParse({
-          consent: data.get("consent"),
-        });
-
-        if (!consentResult.success) {
-          return consentResult.error.flatten();
-        }
-
+        const consent = data.get("consent") as "true" | "false" | undefined;
+        const payload = consent && consent === "true";
         dispatch({
           type: ApplyActionType.UPDATE_CONSENT,
-          payload: consentResult.data.consent === "true",
+          payload,
         });
+
+        const { success, error } = consentSchema.safeParse({ consent });
+        if (!success) {
+          return error.flatten();
+        }
+
         dispatch({
           type: ApplyActionType.UPDATE_PROGRESS,
           payload: progress + 1,
