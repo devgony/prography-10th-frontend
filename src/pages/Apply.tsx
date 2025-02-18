@@ -12,19 +12,29 @@ import {
   Progress,
 } from "../providers/ApplyProvider";
 import { useNavigate } from "react-router";
+import errorMap from "zod/locales/en.js";
 
 const consentSchema = z.object({
-  consent: z.enum(["true", "false"]),
+  consent: z.literal("true", {
+    errorMap: () => ({ message: "개인정보 수집에 동의해주세요." }),
+  }),
 });
 
 const personalSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.string().email("Invalid email address"),
-  phone: z.string().min(1, "Phone number is required"),
+  name: z.string().min(2, "이름은 두 글자 이상이여야 합니다."),
+  email: z.string().email("올바른 이메일 형식이 아닙니다."),
+  phone: z
+    .string()
+    .regex(
+      /^((010-?\d{4})|(0\d{1,2}-?\d{3,4}))-?\d{4}$/,
+      "올바른 휴대폰 번호 형식이 아닙니다.",
+    ),
 });
 
 const roleSchema = z.object({
-  role: z.nativeEnum(Role),
+  role: z.nativeEnum(Role, {
+    errorMap: () => ({ message: "역할을 선택해주세요." }),
+  }),
 });
 
 export type ConsentErrors = {
