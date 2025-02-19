@@ -6,7 +6,7 @@ interface Props {
 export default function Hr({ progress, limit }: Props) {
   return (
     <hr
-      className={`w-full border-y-2 ${progress <= limit ? "border-gray-200" : "border-blue-500"}`}
+      className={`w-full border-y-3 ${progress <= limit ? "border-gray-200" : "border-blue-500"}`}
     />
   );
 }
