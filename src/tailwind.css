@@ -4,6 +4,10 @@
   @apply rounded-lg bg-white p-6;
 }
 
+.circle {
+  @apply flex size-8 items-center justify-center rounded-full p-3;
+}
+
 @keyframes slideOut {
   to {
     opacity: 0;
@@ -22,8 +26,8 @@
 }
 
 ::view-transition-old(view-apply-form) {
-  animation: slideOut 1.5s;
+  animation: slideOut 1s;
 }
 ::view-transition-new(view-apply-form) {
-  animation: slideIn 1.5s;
+  animation: slideIn 1s;
 }
