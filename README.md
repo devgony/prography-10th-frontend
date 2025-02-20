@@ -149,7 +149,7 @@ export function applyReducer(
 const [state, dispatch] = useReducer(applyReducer, initialApplyState);
 ```
 
-- [x] useActionState 를 활용한 form submit 처리
+- [x] `react-hook-form` 을 사용하지 않고 `useActionState` 만을 활용하여 form submit 처리
 
 [Apply.tsx](./src/pages/Apply.tsx)
 
@@ -235,6 +235,8 @@ const [state, action] = useActionState(handleSubmit, null);
 ```
 
 - [x] zod 라이브러리를 사용하여 폼 데이터 유효성 검사 및 에러 메시지 표시
+
+![form-error.png](./assets/form-error.png)
 
 [formSchema.ts](./src/schemas/formSchema.ts)
 
