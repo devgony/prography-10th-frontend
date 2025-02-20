@@ -1,9 +1,8 @@
-import { z } from "zod";
 import { useActionState, useContext } from "react";
 import Header from "../layouts/Header";
 import One from "../components/apply/One";
 import Two from "../components/apply/Two";
-import Three, { Role } from "../components/apply/Three";
+import Three from "../components/apply/Three";
 import Bottom from "../layouts/Bottom";
 import {
   ApplyActionType,
@@ -14,29 +13,11 @@ import {
 import { useNavigate } from "react-router";
 import animatedNavigate from "../utils/animatedNavigate";
 import { Helmet } from "react-helmet";
-
-const consentSchema = z.object({
-  consent: z.literal("true", {
-    errorMap: () => ({ message: "개인정보 수집에 동의해주세요." }),
-  }),
-});
-
-const personalSchema = z.object({
-  name: z.string().min(2, "이름은 두 글자 이상이여야 합니다."),
-  email: z.string().email("올바른 이메일 형식이 아닙니다."),
-  phone: z
-    .string()
-    .regex(
-      /^((010-?\d{4})|(0\d{1,2}-?\d{3,4}))-?\d{4}$/,
-      "올바른 휴대폰 번호 형식이 아닙니다.",
-    ),
-});
-
-const roleSchema = z.object({
-  role: z.nativeEnum(Role, {
-    errorMap: () => ({ message: "역할을 선택해주세요." }),
-  }),
-});
+import {
+  consentSchema,
+  personalSchema,
+  roleSchema,
+} from "../schemas/formSchema";
 
 export type ConsentErrors = {
   consent?: string[] | undefined;
@@ -60,8 +41,6 @@ export default function Apply() {
     dispatch,
   } = useContext(ApplyContext);
   const navigate = useNavigate();
-
-  console.log("progress", form);
 
   const renderContent = (progress: Progress, fieldErrors: FieldErrors) => {
     switch (progress) {
@@ -128,20 +107,25 @@ export default function Apply() {
         dispatch(action);
 
         const { form: updatedForm } = applyReducer({ progress, form }, action);
-        const response = await fetch("https://dummyjson.com/products/add", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedForm),
-        });
+        try {
+          const response = await fetch("https://dummyjson.com/products/add", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updatedForm),
+          });
 
-        alert(
-          `리쿠팅 폼 데이터 API
+          alert(
+            `리쿠팅 폼 데이터 API
 요청: ${JSON.stringify(updatedForm)}
 상태:  ${response.status},
 응답: ${JSON.stringify(await response.json())}`,
-        );
+          );
+        } catch (error) {
+          alert("서버에 연결할 수 없습니다. 네트워크를 확인해주세요");
+          break;
+        }
         navigate("/complete");
         break;
     }
