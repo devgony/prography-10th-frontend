@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router";
-import { ApplyActionType, ApplyContext } from "../providers/ApplyProvider";
+import { ApplyContext } from "../providers/ApplyProvider";
 import animatedNavigate from "../utils/animatedNavigate";
 
 export default function Bottom() {

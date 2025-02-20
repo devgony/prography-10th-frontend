@@ -74,7 +74,7 @@ export default function Apply() {
     }
   };
 
-  const handleSubmit = async (prev: any, data: FormData) => {
+  const handleSubmit = async (_: any, data: FormData) => {
     switch (progress) {
       case Progress.One: {
         const consent = data.get("consent") as "true" | "false" | undefined;
