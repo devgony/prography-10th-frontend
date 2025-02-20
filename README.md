@@ -12,6 +12,10 @@
 
 ## 추가구현
 
+- [x] Context API 를 활용하여 form data 를 global state 로 관리
+- [x] useReducer를 활용하여 global state 에 대한 유형별 액션 정의
+- [x] useActionState 를 활용한 form submit 처리
+- [x] zod 라이브러리를 사용하여 폼 데이터 유효성 검사
 - [x] View Transition API 를 활용하여 리크루팅 단계 변화 시 fade in/out 효과 구현
 - [x] View Transition 을 커스텀하여 carousel 형태의 리크루팅 폼 구현
 - [x] tailwind animation 을 각 button 및 아이콘에 적용
