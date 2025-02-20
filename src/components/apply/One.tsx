@@ -2,6 +2,7 @@ import { useContext } from "react";
 import Title from "../Title";
 import { ApplyContext } from "../../providers/ApplyProvider";
 import { ConsentErrors } from "../../pages/Apply";
+import Li from "../Li";
 
 interface Props {
   fieldErrors?: ConsentErrors;
@@ -31,28 +32,18 @@ export default function One({ fieldErrors }: Props) {
           <p className="text-red-600">*</p>
         </div>
         <ul className="flex flex-col gap-2">
-          <li>
-            <label className="flex gap-2 rounded-lg border border-gray-300 p-3">
-              <input
-                type="radio"
-                name="consent"
-                value="true"
-                defaultChecked={consent === true}
-              />
-              개인정보 수집 여부에 동의합니다
-            </label>
-          </li>
-          <li>
-            <label className="flex gap-2 rounded-lg border border-gray-300 p-3">
-              <input
-                type="radio"
-                name="consent"
-                value="false"
-                defaultChecked={consent === false}
-              />
-              개인정보 수집 여부에 동의하지 않습니다
-            </label>
-          </li>
+          <Li
+            name="consent"
+            label="개인정보 수집 여부에 동의합니다"
+            value="true"
+            defaultChecked={consent === true}
+          />
+          <Li
+            name="consent"
+            label="개인정보 수집 여부에 동의하지 않습니다"
+            value="false"
+            defaultChecked={consent === false}
+          />
         </ul>
         {fieldErrors?.consent?.map((error, index) => (
           <span key={index} className="font-medium text-red-500">

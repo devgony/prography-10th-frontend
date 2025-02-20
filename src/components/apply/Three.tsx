@@ -31,7 +31,13 @@ export default function Three({ fieldErrors }: Props) {
 
         <ul className="flex flex-col gap-2">
           {Object.values(Role).map((label) => (
-            <Li key={label} label={label} defaultChecked={label === role} />
+            <Li
+              name="role"
+              key={label}
+              label={label}
+              value={label}
+              defaultChecked={label === role}
+            />
           ))}
         </ul>
       </div>

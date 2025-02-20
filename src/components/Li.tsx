@@ -1,19 +1,21 @@
-import { Role } from "./apply/Three";
-
 interface Props {
-  label: Role;
+  name: string;
+  label: string;
+  value: string;
   defaultChecked: boolean;
 }
-export default function Li({ label, defaultChecked }: Props) {
+export default function Li({ name, label, value, defaultChecked }: Props) {
   return (
-    <li className="flex gap-2 rounded-lg border border-gray-300 p-3">
-      <input
-        type="radio"
-        name="role"
-        value={label}
-        defaultChecked={defaultChecked}
-      />
-      <label>{label}</label>
+    <li>
+      <label className="flex items-center gap-2 rounded-lg border border-gray-300 p-3 hover:cursor-pointer">
+        <input
+          type="radio"
+          name={name}
+          value={value}
+          defaultChecked={defaultChecked}
+        />
+        {label}
+      </label>
     </li>
   );
 }
