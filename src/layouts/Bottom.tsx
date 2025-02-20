@@ -29,7 +29,7 @@ export default function Bottom() {
       </button>
       <button
         type="submit"
-        className="animate-bounce rounded-md bg-blue-500 px-4 py-1 text-white hover:animate-none hover:cursor-pointer"
+        className="animate-pulse rounded-md bg-blue-500 px-4 py-1 text-white hover:animate-none hover:cursor-pointer"
       >
         {progress === 3 ? "제출하기" : "다음"}
       </button>
