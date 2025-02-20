@@ -10,7 +10,84 @@
 - [x] 6. API통신을 위한 리쿠르팅 **폼 데이터** 구성해야 합니다.
 - [x] 7. 이 외에도 UI/UX적으로 필요한 기능이 있다면 **자유롭게 추가**해 주세요.
 
+## 확인방법
+
+### 1. 배포 url
+
+- <https://prography-10th-frontend-pi.vercel.app/>
+
+### 2. 로컬기동
+
+- Node.js v14 이상 설치 후
+
+```sh
+npm i
+npm run dev
+```
+
+- 브라우저에서 <http://localhost:5173/> 접속
+
 ## 추가구현
+
+- [x] View Transition API 를 활용하여 진행단계 변화 시 fade in/out 효과 구현
+
+![progress.gif](./assets/progress.gif)
+
+[animatedNavigate.ts](./src/utils/animatedNavigate.ts)
+
+```typescript
+document.startViewTransition(() =>
+  flushSync(() =>
+    dispatch({
+      type: ApplyActionType.UPDATE_PROGRESS,
+      payload,
+    }),
+  ),
+);
+```
+
+- [x] View Transition 을 커스텀하여 carousel 형태의 리크루팅 폼 구현
+
+![apply.gif](./assets/apply.gif)
+
+[animatedNavigate.ts](./src/utils/animatedNavigate.ts)
+
+```typescript
+export default function animatedNavigate(
+  direction: "next" | "back",
+  progress: number,
+  dispatch: Dispatch<ApplyAction>,
+) {
+  const payload = direction === "next" ? progress + 1 : progress - 1;
+
+  const style = document.createElement("style");
+  style.id = "view-transition-style";
+  style.innerHTML = `::view-transition-old(view-apply-form) {
+  animation: ${direction}SlideOut 1s;
+}
+::view-transition-new(view-apply-form) {
+animation: ${direction}SlideIn 1s;
+}`;
+
+  document.head.appendChild(style);
+
+  // document.startViewTransition(() =>
+  //..
+}
+```
+
+- [x] tailwind animation 을 각 button 및 아이콘에 적용
+
+[Home.tsx](./src/pages/Home.tsx)
+
+```typescript
+<Link
+    to="/apply"
+    className="animate-pulse rounded-md bg-blue-500 px-6 py-2 text-white hover:animate-none"
+>
+    지원하기
+</Link>
+```
 
 - [x] Context API 를 활용하여 form data 를 global state 로 관리
 
@@ -186,62 +263,5 @@ export const roleSchema = z.object({
 });
 ```
 
-- [x] View Transition API 를 활용하여 진행단계 변화 시 fade in/out 효과 구현
-
-![progress.gif](./assets/progress.gif)
-
-[animatedNavigate.ts](./src/utils/animatedNavigate.ts)
-
-```typescript
-document.startViewTransition(() =>
-  flushSync(() =>
-    dispatch({
-      type: ApplyActionType.UPDATE_PROGRESS,
-      payload,
-    }),
-  ),
-);
-```
-
-- [x] View Transition 을 커스텀하여 carousel 형태의 리크루팅 폼 구현
-
-![apply.gif](./assets/apply.gif)
-
-[animatedNavigate.ts](./src/utils/animatedNavigate.ts)
-
-```typescript
-export default function animatedNavigate(
-  direction: "next" | "back",
-  progress: number,
-  dispatch: Dispatch<ApplyAction>,
-) {
-  const payload = direction === "next" ? progress + 1 : progress - 1;
-
-  const style = document.createElement("style");
-  style.id = "view-transition-style";
-  style.innerHTML = `::view-transition-old(view-apply-form) {
-  animation: ${direction}SlideOut 1s;
-}
-::view-transition-new(view-apply-form) {
-animation: ${direction}SlideIn 1s;
-}`;
-
-  document.head.appendChild(style);
-
-  // document.startViewTransition(() =>
-  //..
-}
-```
-
-- [x] tailwind animation 을 각 button 및 아이콘에 적용
-
-[Home.tsx](./src/pages/Home.tsx)
-
-```typescript
-<Link
-    to="/apply"
-    className="animate-pulse rounded-md bg-blue-500 px-6 py-2 text-white hover:animate-none"
->
-    지원하기
-</Link>
-```
+- [x] vercel 을 통한 배포
+  - <https://prography-10th-frontend-pi.vercel.app/>
