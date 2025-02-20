@@ -9,6 +9,19 @@ export default function animatedNavigate(
 ) {
   const payload = direction === "next" ? progress + 1 : progress - 1;
 
+  const style = document.createElement("style");
+  style.id = "view-transition-style";
+  style.innerHTML = `
+::view-transition-old(view-apply-form) {
+  animation: ${direction}SlideOut 1s;
+}
+::view-transition-new(view-apply-form) {
+animation: ${direction}SlideIn 1s;
+}
+`;
+
+  document.head.appendChild(style);
+
   document.startViewTransition(() =>
     flushSync(() =>
       dispatch({

@@ -8,26 +8,32 @@
   @apply flex size-8 items-center justify-center rounded-full p-3;
 }
 
-@keyframes slideOut {
+@keyframes nextSlideOut {
   to {
     opacity: 0;
     transform: translateX(-100%);
   }
 }
-@keyframes slideIn {
+@keyframes nextSlideIn {
   from {
     opacity: 0;
     transform: translateX(100%);
   }
 }
 
-.view-apply-form {
-  view-transition-name: view-apply-form;
+@keyframes backSlideOut {
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+@keyframes backSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
 }
 
-::view-transition-old(view-apply-form) {
-  animation: slideOut 1s;
-}
-::view-transition-new(view-apply-form) {
-  animation: slideIn 1s;
+.view-apply-form {
+  view-transition-name: view-apply-form;
 }
