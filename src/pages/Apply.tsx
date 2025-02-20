@@ -14,6 +14,7 @@ import {
 import { useNavigate } from "react-router";
 import { flushSync } from "react-dom";
 import animatedNavigate from "../utils/animatedNavigate";
+import { Helmet } from "react-helmet";
 
 const consentSchema = z.object({
   consent: z.literal("true", {
@@ -138,13 +139,18 @@ export default function Apply() {
   const [state, action] = useActionState(handleSubmit, null);
 
   return (
-    <form action={action} className="flex flex-col justify-around gap-5">
-      <section className="rounded-lg bg-white p-6 text-center text-2xl font-extrabold">
-        <h1>Prography 10기 지원서</h1>
-      </section>
-      <Header />
-      {renderContent(progress, state?.fieldErrors)}
-      <Bottom />
-    </form>
+    <>
+      <Helmet>
+        <title>Prography 10기 모집 | 지원하기</title>
+      </Helmet>
+      <form action={action} className="flex flex-col justify-around gap-5">
+        <section className="rounded-lg bg-white p-6 text-center text-2xl font-extrabold">
+          <h1>Prography 10기 지원서</h1>
+        </section>
+        <Header />
+        {renderContent(progress, state?.fieldErrors)}
+        <Bottom />
+      </form>
+    </>
   );
 }
