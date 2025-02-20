@@ -31,13 +31,28 @@ export default function Home() {
           <h2 className="font-extrabold text-blue-500">"프로답게, 재미있게"</h2>
           <p>재미있는 작당을 함께 만들어갈 10기에 합류하세요.</p>
         </section>
-        <section className="text-center">
+        <section className="flex flex-col items-center">
           <p className="mb-4">
             📌 자세한 정보는 아래 페이지에 담아뒀으니, 지원 전 꼭 확인해주세요👇
           </p>
-          <p className="text-blue-500">프로그라피 10기 모집 자세히 알아보기</p>
-          <p className="text-blue-500">🏡 공식 홈페이지</p>
-          <p className="text-blue-500">🔗 인스타그램</p>
+          <a
+            className="text-blue-500 hover:underline"
+            href="https://prography-admin.notion.site/apply-prography10"
+          >
+            프로그라피 10기 모집 자세히 알아보기
+          </a>
+          <a
+            className="text-blue-500 hover:underline"
+            href="https://prography.org/"
+          >
+            🏡 공식 홈페이지
+          </a>
+          <a
+            className="text-blue-500 hover:underline"
+            href="https://www.instagram.com/prography_official/"
+          >
+            🔗 인스타그램
+          </a>
         </section>
         <Link
           to="/apply"
