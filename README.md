@@ -266,4 +266,7 @@ export const roleSchema = z.object({
 ```
 
 - [x] vercel 을 통한 배포
+
   - <https://prography-10th-frontend-pi.vercel.app/>
+
+- [ ] e2e 테스트 추가
