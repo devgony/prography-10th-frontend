@@ -12,7 +12,6 @@ import {
   Progress,
 } from "../providers/ApplyProvider";
 import { useNavigate } from "react-router";
-import { flushSync } from "react-dom";
 import animatedNavigate from "../utils/animatedNavigate";
 import { Helmet } from "react-helmet";
 
@@ -75,7 +74,7 @@ export default function Apply() {
     }
   };
 
-  const handleSubmit = (prev: any, data: FormData) => {
+  const handleSubmit = async (prev: any, data: FormData) => {
     switch (progress) {
       case Progress.One: {
         const consent = data.get("consent") as "true" | "false" | undefined;
@@ -128,9 +127,20 @@ export default function Apply() {
         } as const;
         dispatch(action);
 
-        const formDataToSend = applyReducer({ progress, form }, action);
+        const { form: updatedForm } = applyReducer({ progress, form }, action);
+        const response = await fetch("https://dummyjson.com/products/add", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedForm),
+        });
+
         alert(
-          "리쿠팅 폼 데이터 API요청: " + JSON.stringify(formDataToSend.form),
+          `리쿠팅 폼 데이터 API
+요청: ${JSON.stringify(updatedForm)}
+상태:  ${response.status},
+응답: ${JSON.stringify(await response.json())}`,
         );
         navigate("/complete");
         break;
