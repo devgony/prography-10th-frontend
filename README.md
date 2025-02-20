@@ -46,7 +46,7 @@ document.startViewTransition(() =>
 );
 ```
 
-- [x] View Transition 을 커스텀하여 carousel 형태의 리크루팅 폼 구현
+- [x] View Transition 을 커스텀하여 carousel 형태의 리크루팅 폼 단계 전환
 
 ![apply.gif](./assets/apply.gif)
 
