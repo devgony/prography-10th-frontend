@@ -12,7 +12,7 @@ export default function Complete() {
           <h1>Prography 10기 지원서</h1>
         </section>
         <section className="apply-main flex flex-col items-center gap-4">
-          <div className="flex size-12 items-center justify-center rounded-full bg-blue-500 text-white">
+          <div className="flex size-12 animate-bounce items-center justify-center rounded-full bg-blue-500 text-white">
             ✓
           </div>
           <h1 className="text-xl">지원이 완료되었습니다.</h1>
@@ -22,7 +22,7 @@ export default function Complete() {
           </div>
           <Link
             to="/"
-            className="rounded-md bg-blue-500 px-6 py-2 text-center text-white"
+            className="animate-pulse rounded-md bg-blue-500 px-6 py-2 text-center text-white hover:animate-none"
           >
             홈으로 돌아가기
           </Link>

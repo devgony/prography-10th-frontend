@@ -41,7 +41,7 @@ export default function Home() {
         </section>
         <Link
           to="/apply"
-          className="rounded-md bg-blue-500 px-6 py-2 text-white"
+          className="animate-bounce rounded-md bg-blue-500 px-6 py-2 text-white hover:animate-none"
           viewTransition
         >
           지원하기
