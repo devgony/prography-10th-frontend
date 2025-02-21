@@ -7,7 +7,7 @@ export enum Progress {
   Three = 3,
 }
 
-interface IForm {
+export interface IForm {
   consent?: boolean;
   name: string;
   email: string;
@@ -15,7 +15,7 @@ interface IForm {
   role?: Role;
 }
 
-interface ApplyState {
+export interface ApplyState {
   progress: Progress;
   form: IForm;
 }
