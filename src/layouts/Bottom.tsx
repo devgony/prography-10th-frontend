@@ -12,7 +12,7 @@ export default function Bottom() {
 
   const handleBack = () => {
     if (progress === 1) {
-      navigate(-1);
+      navigate("/");
       return;
     }
 
