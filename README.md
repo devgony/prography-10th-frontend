@@ -27,6 +27,14 @@ npm run dev
 
 - 브라우저에서 <http://localhost:5173/> 접속
 
+### 3. e2e 테스트 수행
+
+- `2. 로컬기동` 한 상태에서 별로 터미널 세션에서 아래 명령어 실행
+
+```sh
+npm run test
+```
+
 ## 추가구현
 
 - [x] View Transition API 를 활용하여 진행단계 변화 시 fade in/out 효과 구현
@@ -154,84 +162,10 @@ const [state, dispatch] = useReducer(applyReducer, initialApplyState);
 [Apply.tsx](./src/pages/Apply.tsx)
 
 ```typescript
-const handleSubmit = async (_: any, data: FormData) => {
-  switch (progress) {
-    case Progress.One: {
-      const consent = data.get("consent") as "true" | "false" | undefined;
-      const payload = consent && consent === "true";
-      dispatch({
-        type: ApplyActionType.UPDATE_CONSENT,
-        payload,
-      });
-
-      const { success, error } = consentSchema.safeParse({ consent });
-      if (!success) {
-        return error.flatten();
-      }
-
-      animatedNavigate("next", progress, dispatch);
-      return;
-    }
-    case Progress.Two: {
-      const formData = {
-        name: data.get("name")?.toString() ?? "",
-        email: data.get("email")?.toString() ?? "",
-        phone: data.get("phone")?.toString() ?? "",
-      };
-
-      dispatch({
-        type: ApplyActionType.UPDATE_PERSONAL,
-        payload: formData,
-      });
-
-      const { success, error } = personalSchema.safeParse(formData);
-      if (!success) {
-        return error.flatten();
-      }
-
-      animatedNavigate("next", progress, dispatch);
-      break;
-    }
-    case Progress.Three:
-      const roleResult = roleSchema.safeParse({
-        role: data.get("role"),
-      });
-
-      if (!roleResult.success) {
-        return roleResult.error.flatten();
-      }
-
-      const action = {
-        type: ApplyActionType.UPDATE_ROLE,
-        payload: roleResult.data.role,
-      } as const;
-      dispatch(action);
-
-      const { form: updatedForm } = applyReducer({ progress, form }, action);
-      try {
-        const response = await fetch("https://dummyjson.com/products/add", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedForm),
-        });
-
-        alert(
-          `리쿠팅 폼 데이터 API
-요청: ${JSON.stringify(updatedForm)}
-상태:  ${response.status},
-응답: ${JSON.stringify(await response.json())}`,
-        );
-      } catch (error) {
-        alert("서버에 연결할 수 없습니다. 네트워크를 확인해주세요");
-        break;
-      }
-      navigate("/complete");
-      break;
-  }
-};
-const [state, action] = useActionState(handleSubmit, null);
+const [state, action] = useActionState(applyHandler.handleSubmit, null);
+//..
+    <form action={action} className="flex flex-col justify-around gap-5">
+//..
 ```
 
 - [x] zod 라이브러리를 사용하여 폼 데이터 유효성 검사 및 에러 메시지 표시
@@ -269,4 +203,82 @@ export const roleSchema = z.object({
 
   - <https://prography-10th-frontend-pi.vercel.app/>
 
-- [ ] e2e 테스트 추가
+- [x] e2e 테스트 추가
+
+  - 모든 요구사항에 대한 test case 추가 완료
+
+    ![e2e](./assets/e2e.png)
+
+- [x] Replace Conditional with Polymorphism
+  - 각 진행 단계에 따른 apply form 에 대한 component 렌더링과 handleSubmit 을 조건문 없이 다형성을 활용하여 구현
+
+[ApplyHandler.ts](./src/handlers/ApplyHandler.ts)
+
+```ts
+export abstract class ApplyHandler {
+  progress: Progress;
+  form: IForm;
+  dispatch: React.Dispatch<ApplyAction>;
+  navigate: NavigateFunction;
+
+  constructor(
+    progress: Progress,
+    form: IForm,
+    dispatch: React.Dispatch<ApplyAction>,
+    navigate: NavigateFunction,
+  ) {
+    this.progress = progress;
+    this.form = form;
+    this.dispatch = dispatch;
+    this.navigate = navigate;
+  }
+
+  abstract renderContent(fieldErrors: FieldErrors): JSX.Element;
+  abstract handleSubmit(
+    _: unknown,
+    data: FormData,
+  ): Promise<
+    | typeToFlattenedError<
+        {
+          consent: "true";
+        },
+        string
+      >
+    | typeToFlattenedError<
+        {
+          name: string;
+          email: string;
+          phone: string;
+        },
+        string
+      >
+    | typeToFlattenedError<
+        {
+          role: string;
+        },
+        string
+      >
+    | undefined
+  >;
+}
+```
+
+[createApplyHandler.ts](./src/handlers/createApplyHandler.ts)
+
+```ts
+export default function createApplyHandler(
+  progress: Progress,
+  form: IForm,
+  dispatch: React.Dispatch<ApplyAction>,
+  navigate: NavigateFunction,
+): ApplyHandler {
+  const handlers = {
+    [Progress.One]: OneHandler,
+    [Progress.Two]: TwoHandler,
+    [Progress.Three]: ThreeHandler,
+  };
+
+  const Handler = handlers[progress];
+  return new Handler(progress, form, dispatch, navigate);
+}
+```
