@@ -122,7 +122,7 @@ export default function Apply() {
 상태:  ${response.status},
 응답: ${JSON.stringify(await response.json())}`,
           );
-        } catch (error) {
+        } catch {
           alert("서버에 연결할 수 없습니다. 네트워크를 확인해주세요");
           break;
         }
