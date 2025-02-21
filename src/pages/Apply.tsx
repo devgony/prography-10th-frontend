@@ -53,7 +53,7 @@ export default function Apply() {
     }
   };
 
-  const handleSubmit = async (_: any, data: FormData) => {
+  const handleSubmit = async (_: unknown, data: FormData) => {
     switch (progress) {
       case Progress.One: {
         const consent = data.get("consent") as "true" | "false" | undefined;
@@ -91,7 +91,7 @@ export default function Apply() {
         animatedNavigate("next", progress, dispatch);
         break;
       }
-      case Progress.Three:
+      case Progress.Three: {
         const roleResult = roleSchema.safeParse({
           role: data.get("role"),
         });
@@ -128,6 +128,7 @@ export default function Apply() {
         }
         navigate("/complete");
         break;
+      }
     }
   };
   const [state, action] = useActionState(handleSubmit, null);
